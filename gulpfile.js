@@ -10,7 +10,7 @@ gulp.task("scripts", function () {
     .pipe(gulp.dest("dist"));
 });
 
-gulp.task('compress', function() {
+gulp.task('compress', ['scripts'], function() {
   return gulp.src(['dist/*.js', '!dist/*.min.js', '!dist/all.js'])
   	.pipe(concat('all.js'))
     .pipe(gulp.dest('dist'))
@@ -22,8 +22,8 @@ gulp.task('compress', function() {
 
 // Watch Files For Changes
 gulp.task('watch', function() {
-    gulp.watch('src/*.js', ['scripts']);
+    gulp.watch('src/*.js', ['scripts', 'compress']);
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'watch', 'compress']);
+gulp.task('default', ['scripts', 'compress', 'watch']);
